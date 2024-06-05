@@ -8,6 +8,7 @@ import compression from "compression";
 import fileupload from "express-fileupload";
 import cors from "cors";
 import createHttpError from "http-errors";
+import routes from "./routes/index.js";
 
 //dotenv config
 dotenv.config();
@@ -38,15 +39,17 @@ app.use(cookieParser());
 //gzip compression
 app.use(compression());
 
-//cors
-app.use(cors());
-
 //file upload
 app.use(
   fileupload({
     useTempFiles: true,
   })
 );
+
+//cors
+app.use(cors());
+
+app.use("/api/v1/", routes);
 
 app.get("/", (req, res) => {
   res.send("Hello from Server");
